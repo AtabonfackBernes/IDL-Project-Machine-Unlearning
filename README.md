@@ -23,7 +23,7 @@ Amidst growing demands for privacy-preserving AI solutions and regulatory compli
 <table align="center">
   <tr>
     <td align="center"> 
-      <img src="images/image.png" alt="Teaser" style="width: 900px;"/> 
+      <img src="images/image.png" alt="Teaser" style="width: 700px;"/> 
       <br>
       <em style="font-size: 18px;">  <strong style="font-size: 18px;">Figure 2:</strong>  Overview of our machine unlearning technique (SalUn).</em>
     </td>

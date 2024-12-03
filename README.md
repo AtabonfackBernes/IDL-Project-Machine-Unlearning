@@ -1,6 +1,4 @@
-# IDL-Project-Machine-Unlearning
-
-# Saliency-Unlearning With Integrated Gradient
+# IDL-Project: Saliency-Unlearning With Integrated Gradient
 The code structure of this project is adapted from the https://github.com/OPTML-Group/Unlearn-Saliency codebase.
 For this project we Added a new script **new_generate_mask.py** that applies integrated gradient to obtain the salient weigts and biases used during unlearning 
 

@@ -10,8 +10,7 @@ import torch.utils.data
 import unlearn
 import utils
 
-
-def compute_integrated_gradients(model, inputs, targets, baseline=None, steps=50):
+def compute_integrated_gradients(model, inputs, targets, baseline=None, steps=50, batch_size=10):
     """
     Compute Integrated Gradients for a batch of inputs.
     
@@ -21,6 +20,7 @@ def compute_integrated_gradients(model, inputs, targets, baseline=None, steps=50
         targets: The target labels for the inputs.
         baseline: The baseline tensor (same shape as inputs).
         steps: Number of interpolation steps.
+        batch_size: Number of samples to process at a time.
         
     Returns:
         Integrated gradients tensor (same shape as inputs).
@@ -38,26 +38,37 @@ def compute_integrated_gradients(model, inputs, targets, baseline=None, steps=50
     # Enable gradient computation
     scaled_inputs.requires_grad_(True)
 
-    # Forward pass through the model
-    outputs = model(scaled_inputs.view(-1, *inputs.shape[1:]))  # Flatten the first two dimensions
-    outputs = outputs.view(steps, inputs.size(0), -1)  # Reshape back to (steps, batch_size, num_classes)
-    
-    # Select the target outputs
-    target_outputs = outputs.gather(2, targets.unsqueeze(0).expand(steps, -1).unsqueeze(-1)).squeeze(-1)  # Shape: (steps, batch_size)
+    # Initialize integrated gradients
+    integrated_gradients = torch.zeros_like(inputs).to(device)
 
-    # Compute gradients w.r.t. inputs
-    grads = torch.autograd.grad(
-        outputs=target_outputs.sum(), inputs=scaled_inputs, create_graph=False, retain_graph=False
-    )[0]  # Shape: (steps, batch_size, ...)
+    # Process in smaller batches
+    for i in range(0, inputs.size(0), batch_size):
+        batch_inputs = inputs[i:i+batch_size]
+        batch_targets = targets[i:i+batch_size]
+        batch_scaled_inputs = scaled_inputs[:, i:i+batch_size]
 
-    # Average gradients over the path (trapezoidal rule)
-    avg_grads = (grads[:-1] + grads[1:]) / 2.0  # Shape: (steps - 1, batch_size, ...)
-    integrated_gradients = avg_grads.mean(dim=0) * (inputs - baseline)  # Shape: (batch_size, ...)
+        # Accumulate gradients for each step
+        for j in range(steps):
+            # Forward pass through the model
+            outputs = model(batch_scaled_inputs[j])
+            target_outputs = outputs.gather(1, batch_targets.unsqueeze(1)).squeeze()  # Select target class outputs
+
+            # Compute gradients w.r.t. inputs
+            grads = torch.autograd.grad(
+                outputs=target_outputs.sum(), inputs=batch_scaled_inputs[j], create_graph=False, retain_graph=False, allow_unused=True
+            )[0]  # Shape: (batch_size, ...)
+
+            # Accumulate gradients if grads is not None
+            if grads is not None:
+                integrated_gradients[i:i+batch_size] += grads / steps
+
+    # Scale integrated gradients by the difference between inputs and baseline
+    integrated_gradients *= (inputs - baseline)
     
     return integrated_gradients
 
 
-def save_gradient_ratio_with_ig(model, data_loaders, criterion, args, steps=50):
+def save_gradient_ratio_with_ig(model, data_loaders, criterion, args, steps=50, batch_size=10):
     """
     Save gradient ratios using Integrated Gradients.
     
@@ -66,12 +77,13 @@ def save_gradient_ratio_with_ig(model, data_loaders, criterion, args, steps=50):
         data_loaders: DataLoader for the 'forget' dataset.
         criterion: The loss function.
         steps: Number of steps for IG computation.
+        batch_size: Number of samples to process at a time.
     """
     
     model.eval()
     device = next(model.parameters()).device
     forget_loader = data_loaders["forget"]
-    gradient_dict = {}
+    gradient_dict = {name: torch.zeros_like(param).to(device) for name, param in model.named_parameters()}
     baseline = None  # Default baseline (zero tensor)
 
     for inputs, targets in forget_loader:
@@ -81,14 +93,15 @@ def save_gradient_ratio_with_ig(model, data_loaders, criterion, args, steps=50):
         inputs.requires_grad = True
         
         # Compute Integrated Gradients for the batch
-        integrated_grads = compute_integrated_gradients(model, inputs, targets, baseline, steps)
+        integrated_grads = compute_integrated_gradients(model, inputs, targets, baseline, steps, batch_size)
         
         # Sum and store the gradients
         for name, param in model.named_parameters():
             if param.requires_grad:
-                if name not in gradient_dict:
-                    gradient_dict[name] = torch.zeros_like(param).to(device)
-                gradient_dict[name] += torch.abs(integrated_grads)
+                # Compute gradients w.r.t. model parameters using integrated gradients
+                param_grads = torch.autograd.grad(outputs=integrated_grads.sum(), inputs=param, create_graph=False, retain_graph=False, allow_unused=True)[0]
+                if param_grads is not None:
+                    gradient_dict[name] += param_grads
 
     # Normalize gradients and apply thresholds as in the original function
     total_gradient = sum(torch.sum(g) for g in gradient_dict.values())
@@ -102,8 +115,8 @@ def save_gradient_ratio_with_ig(model, data_loaders, criterion, args, steps=50):
             mask = (grad > threshold).float()
             hard_dict[name] = mask
         torch.save(hard_dict, os.path.join(args.save_dir, f"with_{threshold:.1f}.pt"))
-
-
+        
+        
 def main():
     torch.cuda.empty_cache()
     args = arg_parser.parse_args()
@@ -222,7 +235,7 @@ def main():
             checkpoint = checkpoint["state_dict"]
             model.load_state_dict(checkpoint, strict=False)
 
-    save_gradient_ratio_with_ig(model, unlearn_data_loaders, criterion, args, steps=50)
+    save_gradient_ratio_with_ig(model, unlearn_data_loaders, criterion, args, steps=50, batch_size=10)
 
 
 if __name__ == "__main__":

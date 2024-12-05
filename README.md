@@ -21,7 +21,7 @@ Machine learning has become a cornerstone in solving complex societal and engine
     <td align="center"> 
       <img src="images/genaral_idea.png" alt="Teaser" style="width: 700px;"/> 
       <br>
-      <em style="font-size: 18px;">  <strong style="font-size: 18px;">Figure 2:</strong>  General overview of the Machine unlearning.</em>
+      <em style="font-size: 18px;">  <strong style="font-size: 18px;">Figure 2:</strong>  General overview of the Machine unlearning. sources: https://research.google/blog/announcing-the-first-machine-unlearning-challenge/</em>
     </td>
   </tr>
 </table>

@@ -18,7 +18,23 @@
 
 ## Abstract: 
 
-Amidst growing demands for privacy-preserving AI solutions and regulatory compliance [1] [2], machine unlearning has emerged as a critical frontier, enabling models to selectively erase learned information without compromising performance. With privacy regulations such as the General Data Protection Regulation (GDPR) granting individuals the "right to be forgotten", it has become essential to develop machine unlearning capabilities that allow users to remove their data from trained models efficiently and effectively [3], [4]. Conventional unlearning methods, which rely heavily on retraining, are inherently limited: they are computationally intensive, time-consuming, unstable, and often degrade model performance, making them impractical for real-world applications that demand rapid, targeted data removal [5], [6], [7]. This shortfall highlights an urgent research gap: the need for unlearning methods that not only handle specific data removal efficiently but also maintain model robustness, stability and accuracy in complex, multi-class scenarios.
+Abstract
+The field of machine learning is rapidly growing. It has been used to solve several social and
+engineering problems, image recognition, text and image generations,... The data governance issues
+and data protection policies were built to make the field fair. Subjects deserve the right to withdraw
+their consent and ask their data to be removed from models. The unlearning techniques help in
+removing the dataset with minimum changes to the model. We presented an integrated gradient
+saliency unlearning architecture that integrates the gradient of the model over a whole path and
+thresholds it to deal with the contribution of the forget dataset on the entire model path weights
+
+### Our Idea: 
+We propose an adaptive gradient saliency framework that enhances machine unlearning for multi-class image classification
+models to address this gap. Our research aims to identify and modulate the most salient gradients
+without incurring the computational burden of full retraining or sacrificing the model’s classification
+performance on non-targeted classes. Through rigorous evaluation, we aim to justify that adaptive
+gradient saliency offers a scalable and robust solution for machine unlearning. We also aim to advance
+the standards of data-driven model management in an era that increasingly values privacy, agility, and
+ethical AI practices.
 
 <table align="center">
   <tr>

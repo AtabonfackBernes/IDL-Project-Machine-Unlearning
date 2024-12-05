@@ -1,6 +1,6 @@
-# IDL-Project: Saliency-Unlearning With Integrated Gradient
+# IDL-Project: Enhancing Machine Unlearning Precision through Integrated Gradient Saliency in Multi-class Image Classification Models
 
-**Contact**: Saliency-Unlearning With Integrated Gradient
+**Contact**: Enhancing Machine Unlearning Precision through Integrated Gradient Saliency in Multi-class Image Classification Models
 
 **Contributors**:
 * Atabonfack Bernes {batabonf@andrew.cmu.edu }
@@ -11,25 +11,48 @@
 
 ## General concept: 
 
+# Enhancing Machine Unlearning Precision through Integrated Gradient Saliency in Multi-class Image Classification Models
+
+## General Concept
+Machine learning has become a cornerstone in solving complex societal and engineering problems, including image recognition and content generation. However, privacy concerns and data governance policies, such as GDPR's "right to be forgotten," demand models to efficiently forget specific data without full retraining. Machine unlearning addresses this need by selectively erasing learned information while maintaining overall model performance.
+
+![genaral_idea](https://github.com/user-attachments/assets/2996409f-66e2-4525-ae96-96536939bf0a)
 
 
+## Abstract
+We present an **Integrated Gradient Saliency** framework to improve machine unlearning in multi-class image classification models. Traditional methods rely on retraining, which is computationally expensive and impractical for real-time applications. Our approach integrates gradient saliency over the model's entire path and applies a thresholding mechanism to efficiently isolate and remove the contributions of the forgotten dataset. This method minimizes changes to model weights while preserving accuracy for non-targeted tasks, offering a robust, scalable solution for privacy-preserving AI.
 
+## Our Idea
+To address the limitations of retraining-based unlearning, we propose an **adaptive gradient saliency framework** that:
+- Identifies and modulates the most impactful gradients linked to the data to be forgotten.
+- Ensures computational efficiency by avoiding full retraining.
+- Maintains model robustness, stability, and accuracy in multi-class scenarios.
+- Advances data-driven model management aligned with ethical AI practices.
 
-
-## Abstract: 
-
-Amidst growing demands for privacy-preserving AI solutions and regulatory compliance [1] [2], machine unlearning has emerged as a critical frontier, enabling models to selectively erase learned information without compromising performance. With privacy regulations such as the General Data Protection Regulation (GDPR) granting individuals the "right to be forgotten", it has become essential to develop machine unlearning capabilities that allow users to remove their data from trained models efficiently and effectively [3], [4]. Conventional unlearning methods, which rely heavily on retraining, are inherently limited: they are computationally intensive, time-consuming, unstable, and often degrade model performance, making them impractical for real-world applications that demand rapid, targeted data removal [5], [6], [7]. This shortfall highlights an urgent research gap: the need for unlearning methods that not only handle specific data removal efficiently but also maintain model robustness, stability and accuracy in complex, multi-class scenarios.
+Through extensive evaluations, our framework demonstrates precision in unlearning and robustness against relearning attacks, setting a new standard for scalable, privacy-focused machine learning.
 
 <table align="center">
   <tr>
     <td align="center"> 
-      <img src="images/image.png" alt="Teaser" style="width: 900px;"/> 
+      <img src="images/image.png" alt="Teaser" style="width: 700px;"/> 
       <br>
       <em style="font-size: 18px;">  <strong style="font-size: 18px;">Figure 2:</strong>  Overview of our machine unlearning technique (SalUn).</em>
     </td>
   </tr>
 </table>
 
+## Results and Discussion
+The results from the experiments that we did are given in the table below 1 as InSalUn_RL at the end of table Our unlearning model shows an accuracy of 0.466 and it very close to IU_SalUn and test accuracy of 94.68 and this is very close to our suggested algorthm.
+
+<table align="center">
+  <tr>
+    <td align="center"> 
+      <img src="images/results.png" alt="Teaser" style="width: 700px;"/> 
+      <br>
+      <em style="font-size: 18px;">  <strong style="font-size: 18px;">Figure 3:</strong> Performance of Methods on Different Metrics.</em>
+    </td>
+  </tr>
+</table>
     
 The code structure of this project is adapted from the https://github.com/OPTML-Group/Unlearn-Saliency codebase.
 For this project we Added a new script **new_generate_mask.py** that applies integrated gradient to obtain the salient weigts and biases used during unlearning 

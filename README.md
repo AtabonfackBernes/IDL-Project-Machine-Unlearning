@@ -16,9 +16,6 @@
 ## General Concept
 Machine learning has become a cornerstone in solving complex societal and engineering problems, including image recognition and content generation. However, privacy concerns and data governance policies, such as GDPR's "right to be forgotten," demand models to efficiently forget specific data without full retraining. Machine unlearning addresses this need by selectively erasing learned information while maintaining overall model performance.
 
-![genaral_idea](https://github.com/user-attachments/assets/2996409f-66e2-4525-ae96-96536939bf0a)
-
-
 ## Abstract
 We present an **Integrated Gradient Saliency** framework to improve machine unlearning in multi-class image classification models. Traditional methods rely on retraining, which is computationally expensive and impractical for real-time applications. Our approach integrates gradient saliency over the model's entire path and applies a thresholding mechanism to efficiently isolate and remove the contributions of the forgotten dataset. This method minimizes changes to model weights while preserving accuracy for non-targeted tasks, offering a robust, scalable solution for privacy-preserving AI.
 

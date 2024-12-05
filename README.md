@@ -16,6 +16,16 @@
 ## General Concept
 Machine learning has become a cornerstone in solving complex societal and engineering problems, including image recognition and content generation. However, privacy concerns and data governance policies, such as GDPR's "right to be forgotten," demand models to efficiently forget specific data without full retraining. Machine unlearning addresses this need by selectively erasing learned information while maintaining overall model performance.
 
+<table align="center">
+  <tr>
+    <td align="center"> 
+      <img src="images/genaral_idea.png" alt="Teaser" style="width: 700px;"/> 
+      <br>
+      <em style="font-size: 18px;">  <strong style="font-size: 18px;">Figure 2:</strong>  General overview of the Machine unlearning.</em>
+    </td>
+  </tr>
+</table>
+
 ## Abstract
 We present an **Integrated Gradient Saliency** framework to improve machine unlearning in multi-class image classification models. Traditional methods rely on retraining, which is computationally expensive and impractical for real-time applications. Our approach integrates gradient saliency over the model's entire path and applies a thresholding mechanism to efficiently isolate and remove the contributions of the forgotten dataset. This method minimizes changes to model weights while preserving accuracy for non-targeted tasks, offering a robust, scalable solution for privacy-preserving AI.
 
@@ -31,7 +41,7 @@ Through extensive evaluations, our framework demonstrates precision in unlearnin
 <table align="center">
   <tr>
     <td align="center"> 
-      <img src="images/image.png" alt="Teaser" style="width: 700px;"/> 
+      <img src="images/image1.png" alt="Teaser" style="width: 700px;"/> 
       <br>
       <em style="font-size: 18px;">  <strong style="font-size: 18px;">Figure 2:</strong>  Overview of our machine unlearning technique (SalUn).</em>
     </td>

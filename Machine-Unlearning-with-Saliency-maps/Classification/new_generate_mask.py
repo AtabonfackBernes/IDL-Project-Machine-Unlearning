@@ -12,7 +12,7 @@ import utils
 
 def compute_integrated_gradients(model, inputs, targets, baseline=None, steps=50, batch_size=10):
     """
-    Compute Integrated Gradients for a batch of inputs.
+    Compute Integrated Gradients for a batch of inputs (generate the map).
     
     Args:
         model: The PyTorch model.

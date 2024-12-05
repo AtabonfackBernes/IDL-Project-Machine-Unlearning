@@ -1,6 +1,6 @@
-# IDL-Project: Saliency-Unlearning With Integrated Gradient
+# IDL-Project: Enhancing Machine Unlearning Precision through Integrated Gradient Saliency in Multi-class Image Classification Models
 
-**Contact**: Saliency-Unlearning With Integrated Gradient
+**Contact**: Enhancing Machine Unlearning Precision through Integrated Gradient Saliency in Multi-class Image Classification Models
 
 **Contributors**:
 * Atabonfack Bernes {batabonf@andrew.cmu.edu }
@@ -11,30 +11,22 @@
 
 ## General concept: 
 
+# Enhancing Machine Unlearning Precision through Integrated Gradient Saliency in Multi-class Image Classification Models
 
+## General Concept
+Machine learning has become a cornerstone in solving complex societal and engineering problems, including image recognition and content generation. However, privacy concerns and data governance policies, such as GDPR's "right to be forgotten," demand models to efficiently forget specific data without full retraining. Machine unlearning addresses this need by selectively erasing learned information while maintaining overall model performance.
 
+## Abstract
+We present an **Integrated Gradient Saliency** framework to improve machine unlearning in multi-class image classification models. Traditional methods rely on retraining, which is computationally expensive and impractical for real-time applications. Our approach integrates gradient saliency over the model's entire path and applies a thresholding mechanism to efficiently isolate and remove the contributions of the forgotten dataset. This method minimizes changes to model weights while preserving accuracy for non-targeted tasks, offering a robust, scalable solution for privacy-preserving AI.
 
+## Our Idea
+To address the limitations of retraining-based unlearning, we propose an **adaptive gradient saliency framework** that:
+- Identifies and modulates the most impactful gradients linked to the data to be forgotten.
+- Ensures computational efficiency by avoiding full retraining.
+- Maintains model robustness, stability, and accuracy in multi-class scenarios.
+- Advances data-driven model management aligned with ethical AI practices.
 
-
-## Abstract: 
-
-Abstract
-The field of machine learning is rapidly growing. It has been used to solve several social and
-engineering problems, image recognition, text and image generations,... The data governance issues
-and data protection policies were built to make the field fair. Subjects deserve the right to withdraw
-their consent and ask their data to be removed from models. The unlearning techniques help in
-removing the dataset with minimum changes to the model. We presented an integrated gradient
-saliency unlearning architecture that integrates the gradient of the model over a whole path and
-thresholds it to deal with the contribution of the forget dataset on the entire model path weights
-
-### Our Idea: 
-We propose an adaptive gradient saliency framework that enhances machine unlearning for multi-class image classification
-models to address this gap. Our research aims to identify and modulate the most salient gradients
-without incurring the computational burden of full retraining or sacrificing the model’s classification
-performance on non-targeted classes. Through rigorous evaluation, we aim to justify that adaptive
-gradient saliency offers a scalable and robust solution for machine unlearning. We also aim to advance
-the standards of data-driven model management in an era that increasingly values privacy, agility, and
-ethical AI practices.
+Through extensive evaluations, our framework demonstrates precision in unlearning and robustness against relearning attacks, setting a new standard for scalable, privacy-focused machine learning.
 
 <table align="center">
   <tr>
@@ -46,6 +38,18 @@ ethical AI practices.
   </tr>
 </table>
 
+## Results and Discussion
+The results from the experiments that we did are given in the table below 1 as InSalUn_RL at the end of table Our unlearning model shows an accuracy of 0.466 and it very close to IU_SalUn and test accuracy of 94.68 and this is very close to our suggested algorthm.
+
+<table align="center">
+  <tr>
+    <td align="center"> 
+      <img src="images/results.png" alt="Teaser" style="width: 700px;"/> 
+      <br>
+      <em style="font-size: 18px;">  <strong style="font-size: 18px;">Figure 3:</strong> Performance of Methods on Different Metrics.</em>
+    </td>
+  </tr>
+</table>
     
 The code structure of this project is adapted from the https://github.com/OPTML-Group/Unlearn-Saliency codebase.
 For this project we Added a new script **new_generate_mask.py** that applies integrated gradient to obtain the salient weigts and biases used during unlearning 

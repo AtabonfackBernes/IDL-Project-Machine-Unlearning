@@ -43,10 +43,11 @@ Through extensive evaluations, our framework demonstrates precision in unlearnin
     <td align="center"> 
       <img src="images/image1.png" alt="Teaser" style="width: 700px;"/> 
       <br>
-      <em style="font-size: 18px;">  <strong style="font-size: 18px;">Figure 2:</strong>  Overview of our machine unlearning technique (SalUn).</em>
+      <em style="font-size: 18px;">  <strong style="font-size: 18px;">Figure 2:</strong>  Overview of our machine unlearning technique (SalUn): Sources: https://blogs.torus.ai/a-step-into-machine-unlearning/ .</em>
     </td>
   </tr>
 </table>
+
 
 ## Results and Discussion
 The results from the experiments that we did are given in the table below 1 as InSalUn_RL at the end of table Our unlearning model shows an accuracy of 0.466 and it very close to IU_SalUn and test accuracy of 94.68 and this is very close to our suggested algorthm.
